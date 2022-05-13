@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Image.asset("images/car.png",width: 300,height: 200,),
+                child: Image.asset("images/finallogo.png",width: 300,height: 200,),
 
               ),
               const SizedBox(height: 5,),
@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -174,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -183,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 

@@ -53,7 +53,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
               const SizedBox(height: 25,),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Image.asset("images/car.png",width: 300,height: 200,),
+                child: Image.asset("images/finallogo.png",width: 300,height: 200,),
 
               ),
               const SizedBox(height: 5,),

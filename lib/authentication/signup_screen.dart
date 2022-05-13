@@ -168,7 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -177,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -210,7 +210,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -219,7 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -253,7 +253,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -262,7 +262,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -295,7 +295,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -304,7 +304,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 
@@ -336,7 +336,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                     borderSide: BorderSide(
-                        color: Colors.orangeAccent,
+                        color: Colors.black38,
                         width: 2
                     )
 
@@ -345,7 +345,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Radius.circular(20)
                     ),
                         borderSide: BorderSide(
-                            color: Colors.orangeAccent,
+                            color: Colors.black38,
                             width: 2
                         )
 

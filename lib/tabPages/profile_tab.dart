@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_dutch/global/global.dart';
 import 'package:go_dutch/splashScreen/splash_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../widgets/info_design_ui.dart';
 
 
 class ProfileTab extends StatefulWidget {
@@ -13,41 +17,75 @@ class ProfileTab extends StatefulWidget {
 class _ProfileTabState extends State<ProfileTab> {
   @override
   Widget build(BuildContext context) {
-    return  Center(
-      child:  Container
-        (
-        height: 50.0,
-        margin: EdgeInsets.all(10),
-        child: RaisedButton(
-          onPressed: () {
-            firebaseAuth.signOut();
-            Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
 
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(80.0)),
-          padding: EdgeInsets.all(0.0),
-          child: Ink(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xff374ABE), Color(0xff64B6FF)],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-                borderRadius: BorderRadius.circular(30.0)),
-            child: Container(
-              constraints:
-              BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
-              alignment: Alignment.center,
-              child: Text(
-                "Sign Out",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 15),
+            //name
+            Text(
+              userModelCurrentInfo.name!,
+              style: const TextStyle(
+                fontSize: 30.0,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
+
+            const SizedBox(
+              height: 10,
+              width: 200,
+              child: Divider(
+                color: Colors.white,
+                height: 2,
+                thickness: 2,
+              ),
+            ),
+
+            const SizedBox(height: 20.0,),
+
+            //phone
+            InfoDesignUIWidget(
+              textInfo: userModelCurrentInfo.phone!,
+              iconData: Icons.phone_iphone,
+            ),
+
+            //email
+            InfoDesignUIWidget(
+              textInfo: userModelCurrentInfo.email!,
+              iconData: Icons.email,
+            ),
+
+            InfoDesignUIWidget(
+              textInfo: userModelCurrentInfo.vehicle_color! + " " + userModelCurrentInfo.vehicle_model! + " " +  userModelCurrentInfo.vehicle_number!,
+              iconData: Icons.car_repair,
+            ),
+
+            const SizedBox(
+              height: 20,
+            ),
+
+            ElevatedButton(
+              onPressed: ()
+              {
+                firebaseAuth.signOut();
+                SystemNavigator.pop();
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.orangeAccent,
+              ),
+              child: const Text(
+                "Logout",
+                style: TextStyle(color: Colors.black),
+              ),
+            )
+
+          ],
         ),
       ),
+
     );
   }
 }

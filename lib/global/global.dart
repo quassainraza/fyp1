@@ -6,5 +6,6 @@ import 'package:go_dutch/models/user_model.dart';
 
 final FirebaseAuth firebaseAuth  = FirebaseAuth.instance;
 User? currentfirebaseuser;
-UserModel? userModelCurrentInfo;
+UserModel userModelCurrentInfo = UserModel();
 StreamSubscription<Position>? streamSubscription;
+String titleStarsRating = "Good";

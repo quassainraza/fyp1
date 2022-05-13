@@ -12,9 +12,24 @@ class RatingsTab extends StatefulWidget {
 class _RatingsTabState extends State<RatingsTab> {
   @override
   Widget build(BuildContext context) {
-    return  Center(
-      child: Text(
-          "Ratings"),
+    return  Material(
+      child: Container(
+
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("images/ratings.png",width: 333,height: 205,),
+
+            ],
+          ),
+        ),
+
+
+      ),
+
+
     );
   }
 }

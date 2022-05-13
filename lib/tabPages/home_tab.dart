@@ -6,6 +6,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:math';
 
 import 'package:geocoding/geocoding.dart';
+import 'package:go_dutch/assistants/geofire_assistant.dart';
+import 'package:go_dutch/models/active_nearby_users.dart';
 import 'package:google_place/google_place.dart';
 import 'package:provider/provider.dart';
 import '../global/global.dart';
@@ -39,7 +41,7 @@ Marker testmarker=Marker(markerId: MarkerId('fastMarker'));
 Place? mylocation;
 double? gpslat,gpslong;
 
-
+bool activenearbyuserkeys = false;
 
 class Map extends StatelessWidget {
   @override
@@ -333,11 +335,14 @@ class MapSampleState extends State<MapSample> {
   String statustext="Now Offline";
   Color statusbuttoncolor= Colors.grey;
   bool isUserActive = false;
+  Set<Marker> markersSet = {};
+  Set<Circle> circlesSet = {};
 
   @override
   void initState() {
     super.initState();
     allowPermissionforlocation();
+    readCurrentOnlineUserInfo();
     final applicationBloc = Provider.of<appbloc>(context, listen: false);
     locationSubscription =
         applicationBloc.selectedLocation.stream.listen((place) {
@@ -421,9 +426,105 @@ class MapSampleState extends State<MapSample> {
         position: LatLng(33.6561535, 73.0135573), //hard coded for fast rn
       );
     });
+
+    initializeGeofireListner();
   }
+  readCurrentOnlineUserInfo() async {
+
+    currentfirebaseuser = firebaseAuth.currentUser;
+    await FirebaseDatabase.instance.ref().child("Users").child(currentfirebaseuser!.uid)
+        .once().then((snap){
+
+      if(snap.snapshot.value != null){
+        userModelCurrentInfo.id = (snap.snapshot.value as dynamic)["id"];
+        userModelCurrentInfo.name = (snap.snapshot.value as dynamic)['name'];
+        userModelCurrentInfo.phone = (snap.snapshot.value as dynamic)["phone"];
+        userModelCurrentInfo.email = (snap.snapshot.value as dynamic)["email"];
+
+        userModelCurrentInfo.cnic = (snap.snapshot.value as dynamic)["cnic"];
+        userModelCurrentInfo.vehicle_model = (snap.snapshot.value as dynamic)["vehicle_details"]["vehicle_model"];
+        userModelCurrentInfo.vehicle_color = (snap.snapshot.value as dynamic)["vehicle_details"]["vehicle_color"];
+        userModelCurrentInfo.vehicle_number = (snap.snapshot.value as dynamic)["vehicle_details"]["vehicle_number"];
+        print("User id--------------------------------------------------: ");
+        print(userModelCurrentInfo.id);
+        print("\n User name: ");
+        print(userModelCurrentInfo.name);
+
+      }
+    });
 
 
+
+  }
+  initializeGeofireListner(){
+    Geofire.initialize("ActiveUsers");
+
+    Geofire.queryAtLocation(userCurrentPosition!.latitude, userCurrentPosition!.longitude, 0.6)!.listen((map) {
+      print(map);
+      if (map != null) {
+        var callBack = map['callBack'];
+
+        //latitude will be retrieved from map['latitude']
+        //longitude will be retrieved from map['longitude']
+
+        switch (callBack) {
+          case Geofire.onKeyEntered:
+            ActiveNearbyUsers activeNearbyUser = ActiveNearbyUsers();
+            activeNearbyUser.loclat=map['latitude'];
+            activeNearbyUser.loclong=map['longitude'];
+            activeNearbyUser.userid=map['key'];
+            GeofireAssistant.activenearbyuserslist.add(activeNearbyUser);
+            if(activenearbyuserkeys==true){
+              displayOnlineNearByUsersOnMap();
+            }
+            break;
+
+          case Geofire.onKeyExited:
+            GeofireAssistant.removeuserfromthelist(map['key']);
+            break;
+
+          case Geofire.onKeyMoved:
+            ActiveNearbyUsers activeNearbyUser = ActiveNearbyUsers();
+            activeNearbyUser.loclat=map['latitude'];
+            activeNearbyUser.loclong=map['longitude'];
+            activeNearbyUser.userid=map['key'];
+            GeofireAssistant.updatenearbyActiveuserslocation(activeNearbyUser);
+            displayOnlineNearByUsersOnMap();
+            break;
+
+            //display online nerbyusers
+          case Geofire.onGeoQueryReady:
+            displayOnlineNearByUsersOnMap();
+
+            break;
+        }
+      }
+
+      setState(() {});
+
+  });
+  }
+  displayOnlineNearByUsersOnMap(){
+    setState(() {
+      markersSet.clear();
+      circlesSet.clear();
+      Set<Marker> usersMarkers = Set<Marker>();
+      for(ActiveNearbyUsers eachUser in GeofireAssistant.activenearbyuserslist){
+       LatLng eachUseractivepos = LatLng(eachUser.loclat!,eachUser.loclong!);
+
+       Marker marker = Marker(
+         markerId: MarkerId(eachUser.userid!),
+         position: eachUseractivepos,
+         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+         rotation: 360,
+       );
+       usersMarkers.add(marker);
+      }
+      setState(() {
+        markersSet = usersMarkers;
+      });
+    });
+  }
 
 
 
@@ -625,7 +726,7 @@ double calculateDistance(lat1, lon1, lat2, lon2){
                       newgoogleMapController = controller;
                       //black theme for google maps
                       blackThemeGoogleMap();
-                      //  setPolylines();
+                        setPolylines();
                     },
                     myLocationEnabled: true, //for blue dot
                     circles: mycircles,
